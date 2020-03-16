@@ -16,7 +16,8 @@ for f in new_files:
     ctime = datetime.fromtimestamp(os.path.getctime('live_files/'+f)).strftime('%d/%m/%Y %H:%M:%S')
     print(f+' created on: '+ctime)
 
-print('Files deleted:\n'+'\n'.join(deleted_files))
+if len(deleted_files) != 0:
+    print('Files deleted:\n'+'\n'.join(deleted_files))
 
 rest_files = list(set(live_files).intersection(safe_files))
 
