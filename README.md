@@ -16,6 +16,6 @@ File logger for Python
 
 ## To execute the script
 
-'''bash
+```bash
 python detect_changes.py
-'''
+```
