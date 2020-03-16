@@ -1,6 +1,27 @@
 import filecmp
 import os
 from datetime import datetime
+from shutil import copytree
+
+def file_actions(ans):
+    if ans == 'y':
+        os.system('cp live_files/* file_safe/')
+    elif ans == 'n':
+        ans1 = input('Would you like to revert these changes (y/n)').lower()
+        revert_actions(ans1)
+    else:
+        ans2 = input('Wrong Input!!! Please enter only y or n').lower()
+        file_actions(ans2)
+
+def revert_actions(ans):
+    if ans == 'y':
+        os.system('rm live_files/*')
+        os.system('cp file_safe/* live_files/')
+    elif ans == 'n':
+        print('Live files are kept intact. The old changes will still be visible in the next run.')
+    else:
+        ans2 = input('Wrong Input!!! Please enter only y or n').lower()
+        revert_actions(ans2)
 
 
 live_files = os.listdir('live_files/')
@@ -23,6 +44,7 @@ rest_files = list(set(live_files).intersection(safe_files))
 
 print('File Modifications:')
 files_modded = False
+
 for f in rest_files:
     if not filecmp.cmp('live_files/'+f, 'file_safe/'+f):
         files_modded = True
@@ -41,3 +63,7 @@ for f in rest_files:
 
 if not files_modded:
     print('No Changes detected')
+
+if files_modded or (len(new_files) != 0) or (len(deleted_files) != 0):
+    ans = input('Would you like to commit these changes (y/n)').lower()
+    file_actions(ans)
