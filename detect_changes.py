@@ -3,6 +3,7 @@ import os
 from datetime import datetime
 from shutil import copytree
 
+## commit changes from live_files to file_safe
 def file_actions(ans):
     if ans == 'y':
         os.system('cp live_files/* file_safe/')
@@ -13,6 +14,7 @@ def file_actions(ans):
         ans2 = input('Wrong Input!!! Please enter only y or n').lower()
         file_actions(ans2)
 
+## revert all the modifications on live_files and restore the files from file_safe
 def revert_actions(ans):
     if ans == 'y':
         os.system('rm live_files/*')
@@ -27,7 +29,10 @@ def revert_actions(ans):
 live_files = os.listdir('live_files/')
 safe_files = os.listdir('file_safe/')
 
+## Detect newly created files
 new_files = list(set(live_files).difference(safe_files))
+
+## Detected deleted files
 deleted_files = list(set(safe_files).difference(live_files))
 
 if len(new_files) != 0:
@@ -42,6 +47,8 @@ if len(deleted_files) != 0:
 
 rest_files = list(set(live_files).intersection(safe_files))
 
+
+### Checking for file modifications
 print('File Modifications:')
 files_modded = False
 
@@ -64,6 +71,8 @@ for f in rest_files:
 if not files_modded:
     print('No Changes detected')
 
+
+## Asking user for commit or revert changes
 if files_modded or (len(new_files) != 0) or (len(deleted_files) != 0):
     ans = input('Would you like to commit these changes (y/n)').lower()
     file_actions(ans)
