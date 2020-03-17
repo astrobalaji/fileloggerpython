@@ -16,6 +16,8 @@ File logger for Python
 
 ## To execute the script
 
+Files can be modified in live_files folder and the file_safe contains the safe repo of the files which will only be modified if the files are commited by the detect_changes.py script
+
 ```bash
 python detect_changes.py
 ```
